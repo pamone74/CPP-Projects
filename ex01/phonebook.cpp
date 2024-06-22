@@ -1,23 +1,24 @@
-#include "phoneBook.hpp"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   phonebook.cpp                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pamone <pamone@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/22 10:37:58 by pamone            #+#    #+#             */
+/*   Updated: 2024/06/22 14:12:21 by pamone           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "PhoneBook.hpp"
 #include <cctype>
-#include <cstring>
 #include <iostream>
 #include <iomanip>
-#include <limits>
 #include <ostream>
 #include <string>
-
-
-static std::string trimString(std::string stringToTrim);
-// Contact::Contact()
-// {
-//     firstName = "";
-//     lastName = "";
-//     nickName = "";
-//     darkestSecret = "";
-
-// }
-
+#include <sstream>
+//--------------------------------------------------------------------------------------//
+// ============================== trimstring() =========================================//
 static std::string trimString(std::string stringToTrim)
 {
     std::string truncated;
@@ -30,7 +31,64 @@ static std::string trimString(std::string stringToTrim)
     // this means that the string length is within the range
     return stringToTrim;
 }
-int Contact::Add(std::string first_name, std::string last_name, std::string nick_name, std::string darkest_secret)
+// ******************************* END *************************************************//
+//-------------------------------------------------------------------------------------//
+// ================================= Valid =============================================//
+int valid(std::string phone)
+{
+    if(phone.empty())
+        return 0;
+    for(size_t i(0); i < phone.length(); i++)
+    {
+        if(!std::isdigit(phone[i]))
+            return 0;
+    }
+    return 1;
+    
+}
+//================================= End of Valid =======================================//
+
+//-------------------------------------------------------------------------------------//
+//                                 displayContact                                      //
+//-------------------------------------------------------------------------------------//
+void displayContact(PhoneBook contacts[], int index)
+{
+    std::cout << "                  CONTACT              " << std::endl;
+    std::cout << "----------------------------------------------" << std::endl;
+    for (int i(0); i < index; i++) {
+        contacts[i].Search();
+    }
+    std::cout << "----------------------------------------------" << std::endl;
+}
+//-------------------------------------------------------------------------------------//
+// ============================== Class Methods ========================================//
+// ******************************* getFirstName() **************************************//
+std::string Contact::getFirstName() const
+{
+    return firstName;
+}
+// ******************************* getFirstName() End **********************************//
+
+//-------------------------------------------------------------------------------------//
+// ******************************* getLastName() **************************************//
+std::string Contact::getLastName() const
+{
+    return lastName;
+}
+// ******************************* getLastName() End **********************************//
+//-------------------------------------------------------------------------------------//
+// ******************************* getNickName() **************************************//
+std::string Contact::getNickName() const
+{
+    return nickName;
+}
+// ******************************* END ************************************************//
+
+//-------------------------------------------------------------------------------------//
+//                                 Contact Add                                         //
+//-------------------------------------------------------------------------------------//
+int Contact::Add(std::string first_name, std::string last_name,\
+std::string nick_name,std::string phone, std::string darkest_secret)
 {
     if (first_name != "")
         firstName = first_name;
@@ -44,85 +102,105 @@ int Contact::Add(std::string first_name, std::string last_name, std::string nick
         nickName = nick_name;
     else
         return -1;
+    if ((!phone.empty()) && phone.length()== 10 && valid(phone) == 1)
+        phoneNumber = phone;
+    else
+    {
+        std::cout << "Phone Number Is not valid" << std::endl;
+        return -1;
+    }
     if (darkest_secret != "")
         darkestSecret = darkest_secret;
     else
         return -1;
     return 0;
 }
+//*************************************** END ****************************************//
 
+//-------------------------------------------------------------------------------------//
+//                                 PhoneBook Constructor                               //
+//-------------------------------------------------------------------------------------//
 PhoneBook::PhoneBook()
 {
-        index = 0;
+    index = 0;
 }
+//*************************************** END ****************************************//
+
+//-------------------------------------------------------------------------------------//
+//                                 PhoneBook Search                                    //
+//-------------------------------------------------------------------------------------//
 int PhoneBook::Search()
 {
-    std::string trimFirstName = trimString(contact.firstName);
-    std::string trimLastName = trimString(contact.lastName);
-    std::string trimNickName = trimString(contact.nickName);
+    std::string trimFirstName = trimString(contact.getFirstName());
+    std::string trimLastName = trimString(contact.getLastName());
+    std::string trimNickName = trimString(contact.getNickName());
     std::cout << "|" << std::setw(10) << index << "|" << std::setw(10) << trimFirstName\
     <<"|" << std::setw(10) << trimLastName << "|" << std::setw(10) << trimNickName  \
     << "|"<< std::endl;
     return 0;
 }
+
+//-------------------------------------------------------------------------------------//
+//                                 main.c                                              //
+//-------------------------------------------------------------------------------------//
+
 int main(void)
 {
-   
     int index(0);
     std::string command;
     PhoneBook phonebook[8];
     Contact contact;
     do {
         std::cout << "You can SEARCH, ADD, EXIT" << std::endl;
-        std::cin >> command;
+        if(!(getline(std::cin, command)))
+            exit(1);
         if (command == "ADD")
         {
-            std::string firstName, lastName, nickName, darkestSecret;
+            std::string firstName, lastName, nickName,phoneNumber, darkestSecret;
             std::cout << "Enter First Name" << std::endl;
-            std::cin >> firstName;
-
+            if(!(getline(std::cin, firstName)))
+                exit(1);
             std::cout << "Enter Last Name" << std::endl;
-            std::cin >> lastName;
-
+            if(!(getline(std::cin, lastName)))
+                exit(1);
             std::cout << "Enter Nick Name" << std::endl;
-            std::cin >> nickName;
-
-            std::cout << "Enter Darkest secret" << std::endl;
-            std::cin >> darkestSecret;
-
+            if(!(getline(std::cin, nickName)))
+                exit(1);
+            std::cout << "Enter Phone Number" << std::endl;
+            if(!(getline(std::cin, phoneNumber)))
+                exit(1);
+            std::cout << "Enter Darkest Secret" << std::endl;
+            if(!(getline(std::cin, darkestSecret)))
+                exit(1);
             if(index < 8)
             {
-                
-                if (contact.Add(firstName, lastName, nickName, darkestSecret) == -1)
-                {
-                    std::cout << "A field can not be empty" << std::endl; 
+                if (contact.Add(firstName, lastName, nickName, phoneNumber,darkestSecret) == -1)
                     continue;
-                }
                 else
                 {
                     phonebook[index].contact = contact;
                     phonebook[index].index = index;
                     index++;
                 }
-                
             }
             else if (index == 8){
-                contact.Add(firstName, lastName, nickName, darkestSecret);
-                phonebook[0].contact = contact;
+                if(contact.Add(firstName, lastName, nickName,phoneNumber, darkestSecret)!= -1)
+                    phonebook[0].contact = contact;
             }
         }
         if (command == "SEARCH")
         {
+            displayContact(phonebook, index);
+            std::string input;
             int indexSearch;
             std::cout << "Enter the Index Please: " << std::endl;
-            std::cin >> indexSearch;
-            // Prompt for the index
-           if (std::cin.fail())
+            if(!(getline(std::cin, input)))
+                exit(1);
+            std::istringstream iss(input);
+            if(!(iss >> indexSearch))
             {
-                std::cin.clear(); // Clear the fail state
-                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Ignore incorrect input
                 std::cout << "Invalid Input. Please enter a valid numeric index." << std::endl;
-                continue; // Restart the loop
+                continue;
             }
             if (indexSearch <= 8 && indexSearch < index)
             {
@@ -132,15 +210,7 @@ int main(void)
                 std::cout << "----------------------------------------------" << std::endl;
             }
             else
-            {
-                std::cout << std::endl << "The index is out of range" << std::endl;
-                std::cout << "                  CONTACT              " << std::endl;
-                std::cout << "----------------------------------------------" << std::endl;
-                for (int i(0); i < index; i++) {
-                   phonebook[i].Search();
-                }
-                std::cout << "----------------------------------------------" << std::endl;
-            }
+                std::cout << "The index is out of range" << std::endl;
         }
     
     }while (command != "EXIT");
