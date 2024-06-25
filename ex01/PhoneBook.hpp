@@ -24,6 +24,16 @@ class Contact{
         std::string getFirstName(void) const;
         std::string getLastName(void) const;
         std::string getNickName(void) const;
+        std::string getPhoneNumber(void)const;
+        std::string getDarkestSecret(void) const;
+        // setters
+        void setFirstName(std::string);
+        void setLastName(std::string);
+        void setNickName(std::string);
+        void setPhoneNumber(std::string);
+        void setDarkestSecret(std::string);
+
+        
     private:
         std::string firstName;
         std::string lastName;
@@ -36,10 +46,13 @@ class PhoneBook{
 
     public:
         PhoneBook(void); 
-        int Search();
-        void displayContact(int index)  const;
+        void displayContact(void) const;
+        int Search(int) const;
+        void addContact(Contact list, int);
         int index;
-        Contact contact;
+    private:
+        Contact contactList[9];
 };
+
 
 #endif

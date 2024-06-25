@@ -17,6 +17,7 @@
 #include <ostream>
 #include <string>
 #include <sstream>
+#include <cstdlib>
 //--------------------------------------------------------------------------------------//
 // ============================== trimstring() =========================================//
 static std::string trimString(std::string stringToTrim)
@@ -51,12 +52,19 @@ int valid(std::string phone)
 //-------------------------------------------------------------------------------------//
 //                                 displayContact                                      //
 //-------------------------------------------------------------------------------------//
-void displayContact(PhoneBook contacts[], int index)
+void PhoneBook::displayContact()const
 {
     std::cout << "                  CONTACT              " << std::endl;
-    std::cout << "----------------------------------------------" << std::endl;
-    for (int i(0); i < index; i++) {
-        contacts[i].Search();
+    std::cout << "--------------------<< >>---------------------" << std::endl;
+    
+
+    for (int i(0); i <= index; i++) {
+        std::string trimFirstName = trimString(contactList[i].getFirstName());
+        std::string trimLastName = trimString(contactList[i].getLastName());
+        std::string trimNickName = trimString(contactList[i].getNickName());
+        std::cout << "|" << std::setw(10) << i << "|" << std::setw(10) << trimFirstName\
+        <<"|" << std::setw(10) << trimLastName << "|" << std::setw(10) << trimNickName  \
+        << "|"<< std::endl;
     }
     std::cout << "----------------------------------------------" << std::endl;
 }
@@ -81,6 +89,15 @@ std::string Contact::getLastName() const
 std::string Contact::getNickName() const
 {
     return nickName;
+}
+
+std::string Contact::getPhoneNumber() const{
+    return phoneNumber;
+}
+
+std::string Contact::getDarkestSecret()const
+{
+    return darkestSecret;
 }
 // ******************************* END ************************************************//
 
@@ -129,17 +146,68 @@ PhoneBook::PhoneBook()
 //-------------------------------------------------------------------------------------//
 //                                 PhoneBook Search                                    //
 //-------------------------------------------------------------------------------------//
-int PhoneBook::Search()
+int PhoneBook::Search(int index) const
 {
-    std::string trimFirstName = trimString(contact.getFirstName());
-    std::string trimLastName = trimString(contact.getLastName());
-    std::string trimNickName = trimString(contact.getNickName());
+    std::string trimFirstName = trimString(contactList[index].getFirstName());
+    std::string trimLastName = trimString(contactList[index].getLastName());
+    std::string trimNickName = trimString(contactList[index].getNickName());
     std::cout << "|" << std::setw(10) << index << "|" << std::setw(10) << trimFirstName\
     <<"|" << std::setw(10) << trimLastName << "|" << std::setw(10) << trimNickName  \
     << "|"<< std::endl;
     return 0;
 }
+// Setters
+// first name
+void Contact::setFirstName(std::string first_name)
+{   if(!first_name.empty())
+        firstName  = first_name;
+}
 
+// last name
+void Contact::setLastName(std::string last_name)
+{
+    if(!last_name.empty())
+        lastName  = last_name;
+}
+
+// NickName
+void Contact::setNickName(std::string nick_name)
+{
+    if(!nick_name.empty())
+        nickName = nick_name;
+}
+
+// set phone Number
+void Contact::setPhoneNumber(std::string phone_number)
+{
+    if(phone_number.empty())
+        phoneNumber = phone_number;
+}
+
+void Contact::setDarkestSecret(std::string secret)
+{
+    if(!secret.empty())
+        darkestSecret = secret;
+}
+//-------------------------------------------------------------------------------------//
+//                            PhoneBook Search addcontact                              //
+//-------------------------------------------------------------------------------------//
+void PhoneBook::addContact(Contact list, int index)
+{
+    static int oldest(0);
+    if (index <= 8) {
+        contactList[index].Add(list.getFirstName(),list.getLastName(), list.getNickName(), list.getPhoneNumber(), list.getDarkestSecret());
+    }
+    if(index == 8 && oldest <= 8)
+    {
+        contactList[oldest].Add(list.getFirstName(),list.getLastName(), list.getNickName(), list.getPhoneNumber(), list.getDarkestSecret());
+        if(oldest == 8)
+            oldest = 0;
+        else
+          oldest ++;
+    }
+    
+}
 //-------------------------------------------------------------------------------------//
 //                                 main.c                                              //
 //-------------------------------------------------------------------------------------//
@@ -148,7 +216,7 @@ int main(void)
 {
     int index(0);
     std::string command;
-    PhoneBook phonebook[8];
+    PhoneBook phonebook;
     Contact contact;
     do {
         std::cout << "You can SEARCH, ADD, EXIT" << std::endl;
@@ -174,23 +242,26 @@ int main(void)
                 exit(1);
             if(index < 8)
             {
-                if (contact.Add(firstName, lastName, nickName, phoneNumber,darkestSecret) == -1)
+               if (contact.Add(firstName, lastName, nickName, phoneNumber,darkestSecret) == -1)
+               {
+                    std::cout << "A field can not be empty" << std::endl; 
                     continue;
-                else
+                }else
                 {
-                    phonebook[index].contact = contact;
-                    phonebook[index].index = index;
-                    index++;
+                   phonebook.addContact(contact, index);
+
+                   phonebook.index = index;
+                   index++;
                 }
             }
             else if (index == 8){
-                if(contact.Add(firstName, lastName, nickName,phoneNumber, darkestSecret)!= -1)
-                    phonebook[0].contact = contact;
+                 contact.Add(firstName, lastName, nickName,phoneNumber, darkestSecret);
+                phonebook.addContact(contact, index);
             }
         }
         if (command == "SEARCH")
         {
-            displayContact(phonebook, index);
+            phonebook.displayContact();
             std::string input;
             int indexSearch;
             std::cout << "Enter the Index Please: " << std::endl;
@@ -206,7 +277,7 @@ int main(void)
             {
                 std::cout << "                  CONTACT              " << std::endl;
                 std::cout << "----------------------------------------------" << std::endl;
-                phonebook[indexSearch].Search();
+                phonebook.Search(indexSearch);
                 std::cout << "----------------------------------------------" << std::endl;
             }
             else
