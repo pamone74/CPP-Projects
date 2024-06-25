@@ -32,7 +32,13 @@ int main(int ac, char *argv[])
         std::cout << std::endl;
     }
     else {
-        std::cout <<  "* LOUD AND UNBEARABLE FEEDBACK NOISE *" << std::endl;
+        std::string defaultSrting = "* loud noise and unbearable feedback noise *";
+        for(size_t i(0) ; i < defaultSrting.length(); i++)
+        {
+            char c = std::toupper(defaultSrting[i]);
+            std::cout << c;
+        }
+        std::cout << std::endl;
     }
     return 0;
 }

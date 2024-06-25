@@ -11,18 +11,20 @@
 # **************************************************************************** #
 
 NAME = megaphone
-CPPFLAG = c++ -Wall -Wextra -Wextra -std=c++98
+COMPILER = c++
+CPPFLAG = -Wall -Wextra -Wextra -std=c++98
 SRC = megaphone.cpp
 
 OBJ = $(SRC:.cpp=.o)
 
 all : $(NAME)
 %.o: %.cpp
-	$(CPPFLAG) -c $< -o $@
+	$(COMPILER) $(CPPFLAG) -c $< -o $@
 $(NAME) : $(OBJ)
-	$(CPPFLAG) $(SRC) -o $(NAME)
+	$(COMPILER) $(CPPFLAG) $(SRC) -o $(NAME)
 clean:
-	rm $(OBJ)
+	@-rm $(OBJ)
 fclean: clean	
-	rm $(NAME)
+	@-rm $(NAME)
 re: fclean all
+.PHONY: all clean fclean re
