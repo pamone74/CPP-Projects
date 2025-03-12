@@ -392,7 +392,35 @@ For more details:
 
   <summary>📌 Module 01</summary>
   
-  _(Details to be added)_
+ ```
+### Heap Memory in C++
+
+Heap allocation is used for **dynamic memory** that needs to be manually managed by the programmer. This memory is allocated during the program's runtime and must be freed manually.
+
+### Key Points:
+- The **heap** is more **flexible** than the stack, as it allows you to allocate memory dynamically at runtime.
+- However, if the memory is not freed properly, it can cause **memory leaks**.
+- Memory in the heap persists until it is explicitly freed using `delete`.
+
+### Syntax:
+
+- **Allocate memory on the heap** using `new`.
+- **Free memory** using `delete`.
+
+### Syntax Example:
+
+```cpp
+// Allocating memory on the heap
+Obj* obj = new Obj;  // Allocates memory for Obj on the heap
+
+// Freeing memory
+delete obj;  // Frees the memory allocated for Obj
+```
+Sources:
+- [Stack vs Heap Memory Allocation](https://www.geeksforgeeks.org/stack-vs-heap-memory-allocation/)
+- [new and delete Operators in C++ For Dynamic Memory](https://www.geeksforgeeks.org/new-and-delete-operators-in-cpp-for-dynamic-memory/)
+    
+---
   
 </details>
 
