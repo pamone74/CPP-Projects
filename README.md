@@ -219,13 +219,25 @@ Sources:
 
 ---
   **📝 Exercises:**
-  - `ex00`: Implement a simple class with constructors and destructors.
-  - `ex01`: Implement getters and setters.
-  - `ex02`: Dynamic memory management.
+  - Exercise 00: Megaphone
+![Screenshot_12-3-2025_64915_cdn intra 42 fr](https://github.com/user-attachments/assets/1db8e78a-2e86-478d-bad7-8d0122d85f45)
+### Logic Flowchart
+![CPP Documentatio](https://github.com/user-attachments/assets/e7324249-4f8a-4393-add2-3b5c8a491c77)
+
+## To test This project:
+- [x] **Step 1:** Git clone
+``` https://github.com/pamone74/CPP-Projects```
+- [x] **Step 2:** Run
+```cd ex00```
+- [x] **Step 3:** Run
+```Makefile```
+- [x] **Step 4:** Run
+```./megaphone```
   
 </details>
 
 <details>
+
   <summary>📌 Module 01</summary>
   
   _(Details to be added)_
