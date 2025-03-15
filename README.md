@@ -102,10 +102,16 @@ To run and compile C++ code, ensure that you have the following installed:
 
 <details>
   <summary>
-    0️⃣ Module 00 - Basics of C++
+     Module 0️⃣0️⃣ - Basics of C++
   </summary>
   
   **📚 Topics Covered:**
+  - Namespaces
+  - Classes
+  - Memeber Functions
+  - Stdio streams
+  - Initilization List
+  - Static , const and some basic stuff
 ---
 # C++ Basics: Understanding Key Concepts
 ### 1. **Namespaces in C++**
@@ -380,10 +386,14 @@ For more details:
 </details>
 
 <details>
-
-  <summary>📌 Module 01</summary>
+  <summary>Module 0️⃣1️⃣- Memeory Allocation, pointers to memebers, references and switch statment</summary>
   
- ```
+  **📚 Topics Covered:**
+  - Memory Allocation
+  - Pointers to Member
+  - References & Switch Statements
+---
+
 ### Heap Memory in C++
 
 Heap allocation is used for **dynamic memory** that needs to be manually managed by the programmer. This memory is allocated during the program's runtime and must be freed manually.
@@ -399,30 +409,239 @@ Heap allocation is used for **dynamic memory** that needs to be manually managed
 - **Free memory** using `delete`.
 
 ### Syntax Example:
-
 ```cpp
 // Allocating memory on the heap
 Obj* obj = new Obj;  // Allocates memory for Obj on the heap
 
 // Freeing memory
 delete obj;  // Frees the memory allocated for Obj
-```
+``` 
 Sources:
 - [Stack vs Heap Memory Allocation](https://www.geeksforgeeks.org/stack-vs-heap-memory-allocation/)
 - [new and delete Operators in C++ For Dynamic Memory](https://www.geeksforgeeks.org/new-and-delete-operators-in-cpp-for-dynamic-memory/)
     
 ---
-  
-</details>
+### Example
 
-<details>
-  <summary>📌 Module 02</summary>
-  
-  _(Details to be added)_
-  
+In the given example, when `main()` executes, memory is allocated for the global variable `name`, which stores the return value of the `ReturnString()` function. This function takes a string as a parameter, and in this case, it receives the return value of the `Name()` function, which returns the string `"Pamone"`.  
+
+
+![image](https://github.com/user-attachments/assets/4d185c6a-886f-42c3-baae-82ed77496268)
+
+
+### **Step-by-Step Execution of the Program**
+
+#### **Step 1: Memory Allocation for Global Variable**  
+- The global variable `name` is declared but uninitialized at the start.  
+
+#### **Step 2: `main()` Function Execution Begins**  
+- The program enters the `main()` function.
+
+#### **Step 3: Calling `ReturnString(Name())`**  
+- `ReturnString(Name())` is evaluated.  
+- To do this, the program must first execute `Name()`.
+
+#### **Step 4: Execution of `Name()`**  
+- The function `Name()` is called.  
+- It simply returns the string `"Pamone"`.  
+- Execution of `Name()` ends, and control goes back to `ReturnString()`.
+
+#### **Step 5: Execution of `ReturnString()`**  
+- `ReturnString()` receives `"Pamone"` as an argument.  
+- It returns the same string `"Pamone"`.  
+- Execution of `ReturnString()` ends.
+
+#### **Step 6: Assigning the Returned Value to `name`**  
+- The global variable `name` is now assigned `"Pamone"`.
+
+#### **Step 7: Printing the Value**  
+- `std::cout << name << std::endl;` prints `"Pamone"` to the console.
+
+#### **Step 8: Program Ends**  
+- `return 0;` is executed, and the program terminates successfully.
+
+---
+
+### **Final Output:**  
+```
+Pamone
+```
+
+---
+## Pointers to Member Functions, References, and Switch Statements
+
+## Table of Contents
+- [Pointers to Member Functions](#pointers-to-member-functions)
+  - [Definition](#definition)
+  - [Syntax](#syntax)
+  - [Example Usage](#example-usage)
+- [References in C++](#references-in-c)
+  - [Definition](#definition-1)
+  - [Examples](#examples)
+- [Switch Statements in C++](#switch-statements-in-c)
+  - [Definition](#definition-2)
+  - [Syntax](#syntax-1)
+  - [Example Usage](#example-usage-1)
+- [Sources](#sources)
+
+---
+
+## **Pointers to Member Functions**
+
+### **Definition**
+A **pointer to a member function** allows calling a class method dynamically at runtime, without knowing which function will be executed beforehand.
+
+### **Syntax**
+```cpp
+typedef void (ClassName::*PointerType)();
+```
+- `ClassName::*PointerType` → Pointer to a member function of `ClassName`.
+- `void (...)` → The function returns `void` and takes no parameters.
+
+### **Example Usage**
+```cpp
+#include <iostream>
+
+class Harl {
+public:
+    void debug() { std::cout << "Debugging...\n"; }
+    void info() { std::cout << "Information...\n"; }
+};
+
+typedef void (Harl::*HarlMemFn)();
+
+int main() {
+    Harl h;
+    HarlMemFn func = &Harl::info; // Pointer to member function
+    (h.*func)(); // Call the function dynamically
+    return 0;
+}
+```
+**Output:**
+```
+Information...
+```
+
+---
+
+## **References in C++**
+
+### **Definition**
+A reference is an alias for an existing variable. It provides an alternative name for a variable without creating a copy.
+
+### **Examples**
+#### **Basic Reference Usage**
+```cpp
+#include <iostream>
+
+int main() {
+    int x = 10;
+    int &ref = x; // ref is a reference to x
+    ref = 20;     // Modifies x
+    std::cout << "x: " << x << std::endl; // Output: x: 20
+    return 0;
+}
+```
+
+#### **Reference as Function Parameter**
+```cpp
+#include <iostream>
+
+void modify(int &ref) {
+    ref += 10;
+}
+
+int main() {
+    int num = 5;
+    modify(num);
+    std::cout << "Modified num: " << num << std::endl; // Output: Modified num: 15
+    return 0;
+}
+```
+
+---
+
+## **Switch Statements in C++**
+
+### **Definition**
+A `switch` statement is used for multi-way branching based on an integer or character expression.
+
+### **Syntax**
+```cpp
+switch(expression) {
+    case value1:
+        // Code to execute if expression == value1
+        break;
+    case value2:
+        // Code to execute if expression == value2
+        break;
+    default:
+        // Code to execute if no case matches
+}
+```
+
+### **Example Usage**
+```cpp
+#include <iostream>
+
+int main() {
+    int choice = 2;
+    switch (choice) {
+        case 1:
+            std::cout << "You chose option 1." << std::endl;
+            break;
+        case 2:
+            std::cout << "You chose option 2." << std::endl;
+            break;
+        default:
+            std::cout << "Invalid choice." << std::endl;
+    }
+    return 0;
+}
+```
+
+**Output:**
+```
+You chose option 2.
+```
+
+---
+
+## **Sources**
+1. **C++ Reference** - [cppreference.com](https://en.cppreference.com/)
+2. **GeeksforGeeks - C++ Pointers to Member Functions** - [geeksforgeeks.org](https://www.geeksforgeeks.org/)
+3. **cplusplus.com - C++ References** - [cplusplus.com](https://www.cplusplus.com/doc/tutorial/references/)
+4. **C++ Switch Statements** - [cplusplus.com](https://www.cplusplus.com/doc/tutorial/control/)
+
+---
+### **📌 Notes:**
+- Pointers to member functions are useful in event handling and dynamic method invocation.
+- References avoid unnecessary copying of data, improving performance.
+- `switch` statements are best used when dealing with multiple discrete values.
+
+## 📝 Summary
+
+| No. | Topic                    | Link                                      |
+|-----|--------------------------|-------------------------------------------|
+| 1️⃣  | Pointers and References  | [Pointers](https://www.geeksforgeeks.org/pointers-in-c/) |
+| 2️⃣  | Pointers to Member Functions|[Pointers to Member Function](https://www.geeksforgeeks.org/) |
+| 3️⃣  | C++ References           | [Refernces](https://www.cplusplus.com/doc/tutorial/references/) |
+| 4️⃣  | C++ Switch Statements | [Switch Statement](https://www.cplusplus.com/doc/tutorial/control/) |
+
+
 </details>
 
 ---
+
+
+<details>
+
+  <summary>📌 Module 01</summary>
+  
+
+  
+</details>
+
 
 ## 📄 License
 
