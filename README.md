@@ -640,17 +640,148 @@ You chose option 2.
 
 </details>
 
----
-
-
 <details>
 
-  <summary>📌 Module 01</summary>
-  
+  <summary>Module 0️⃣2️⃣ :  Ad-hoc polymorphism, operator overloading and the Orthodox Canonical class form</summary>
 
-  
+## **📚 Topics Covered:**  
+- [Ad-hoc Polymorphism](#ad-hoc-polymorphism)  
+- [Operator Overloading](#operator-overloading)  
+- [The Orthodox Canonical Class Form](#the-orthodox-canonical-class-form)  
+
+---
+
+## **📌 Ad-hoc Polymorphism**  
+### **Definition**  
+Ad-hoc polymorphism allows functions or operators to work with different types of data through **function overloading** or **operator overloading**.  
+
+### **Example: Function Overloading**  
+```cpp
+#include <iostream>
+
+class Printer {
+public:
+    void print(int x) { std::cout << "Integer: " << x << std::endl; }
+    void print(double x) { std::cout << "Double: " << x << std::endl; }
+    void print(std::string x) { std::cout << "String: " << x << std::endl; }
+};
+
+int main() {
+    Printer p;
+    p.print(10);
+    p.print(3.14);
+    p.print("Hello");
+    return 0;
+}
+```
+### **Output:**  
+```
+Integer: 10  
+Double: 3.14  
+String: Hello  
+```
+
+---
+
+## **📌 Operator Overloading**  
+### **Definition**  
+Operator overloading allows custom behavior for standard operators (`+`, `-`, `*`, `==`, etc.) when used with user-defined classes.  
+
+### **Example: Overloading the `+` Operator**  
+```cpp
+#include <iostream>
+
+class Vector {
+public:
+    int x, y;
+    Vector(int a, int b) : x(a), y(b) {}
+
+    Vector operator+(const Vector& other) {
+        return Vector(x + other.x, y + other.y);
+    }
+
+    void display() { std::cout << "(" << x << ", " << y << ")" << std::endl; }
+};
+
+int main() {
+    Vector v1(1, 2), v2(3, 4);
+    Vector v3 = v1 + v2; // Calls overloaded operator+
+    v3.display();
+    return 0;
+}
+```
+### **Output:**  
+```
+(4, 6)
+```
+
+---
+
+## **📌 The Orthodox Canonical Class Form**  
+### **Definition**  
+The **Orthodox Canonical Class Form** (OCCF) ensures that a class follows a proper structure with the **four key special member functions**:  
+1. **Default Constructor** (`ClassName()`)  
+2. **Copy Constructor** (`ClassName(const ClassName&)`)  
+3. **Copy Assignment Operator** (`ClassName& operator=(const ClassName&)`)  
+4. **Destructor** (`~ClassName()`)  
+
+### **Example: Implementing OCCF**  
+```cpp
+#include <iostream>
+
+class Sample {
+private:
+    int* data;
+public:
+    Sample() : data(new int(0)) {} // Default Constructor
+
+    Sample(const Sample& other) : data(new int(*other.data)) {} // Copy Constructor
+
+    Sample& operator=(const Sample& other) { // Copy Assignment
+        if (this != &other) {
+            *data = *other.data;
+        }
+        return *this;
+    }
+
+    ~Sample() { delete data; } // Destructor
+
+    void setData(int val) { *data = val; }
+    int getData() const { return *data; }
+};
+
+int main() {
+    Sample a;
+    a.setData(10);
+
+    Sample b = a; // Copy Constructor
+    Sample c;
+    c = a; // Copy Assignment Operator
+
+    std::cout << "a: " << a.getData() << ", b: " << b.getData() << ", c: " << c.getData() << std::endl;
+    return 0;
+}
+```
+### **Output:**  
+```
+a: 10, b: 10, c: 10
+```
+
+---
+
+## **📌 Sources**  
+1. [C++ Operator Overloading (cppreference)](https://en.cppreference.com/w/cpp/language/operators)  
+2. [GeeksforGeeks - Function Overloading](https://www.geeksforgeeks.org/function-overloading-c/)  
+3. [C++ Orthodox Canonical Form](https://isocpp.org/wiki/faq/ctors#canonical-form)  
+
+---
+
 </details>
-
+<details>
+  <summary>
+    
+  </summary>
+</details>
 
 ## 📄 License
 
