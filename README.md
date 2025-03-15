@@ -393,7 +393,28 @@ For more details:
   - Pointers to Member
   - References & Switch Statements
 ---
+## Table of Contents
+- [Memory Allocation](#Memory-Allocation)
+  - [Heap Memory in C++](#Heap-Memory-In-C++)
+    - [Key Points](#key-points)
+    - [Syntax](#syntax)
+  - [Static Memory Allocation](#static-memory-allocation)
+- [Pointers to Member Functions](#pointers-to-member-functions)
+  - [Definition](#definition)
+  - [Syntax](#syntax)
+  - [Example Usage](#example-usage)
+- [References in C++](#references-in-c)
+  - [Definition](#definition-1)
+  - [Examples](#examples)
+- [Switch Statements in C++](#switch-statements-in-c)
+  - [Definition](#definition-2)
+  - [Syntax](#syntax-1)
+  - [Example Usage](#example-usage-1)
+- [Sources](#sources)
 
+## Memory Allocation
+Memory allocation in C++ refers to the process of reserving memory space for variables, objects, and data structures. There are two primary types of memory allocation:
+- Heap and Stack
 ### Heap Memory in C++
 
 Heap allocation is used for **dynamic memory** that needs to be manually managed by the programmer. This memory is allocated during the program's runtime and must be freed manually.
@@ -416,11 +437,13 @@ Obj* obj = new Obj;  // Allocates memory for Obj on the heap
 // Freeing memory
 delete obj;  // Frees the memory allocated for Obj
 ``` 
-Sources:
-- [Stack vs Heap Memory Allocation](https://www.geeksforgeeks.org/stack-vs-heap-memory-allocation/)
-- [new and delete Operators in C++ For Dynamic Memory](https://www.geeksforgeeks.org/new-and-delete-operators-in-cpp-for-dynamic-memory/)
-    
+   
 ---
+### Static Memory Allocation
+- Memory is allocated at compile time.
+- The size is fixed and determined before program execution.
+- Variables declared inside functions and global/static variables use static memory allocation.
+  
 ### Example
 
 In the given example, when `main()` executes, memory is allocated for the global variable `name`, which stores the return value of the `ReturnString()` function. This function takes a string as a parameter, and in this case, it receives the return value of the `Name()` function, which returns the string `"Pamone"`.  
@@ -468,24 +491,6 @@ Pamone
 ```
 
 ---
-## Pointers to Member Functions, References, and Switch Statements
-
-## Table of Contents
-- [Pointers to Member Functions](#pointers-to-member-functions)
-  - [Definition](#definition)
-  - [Syntax](#syntax)
-  - [Example Usage](#example-usage)
-- [References in C++](#references-in-c)
-  - [Definition](#definition-1)
-  - [Examples](#examples)
-- [Switch Statements in C++](#switch-statements-in-c)
-  - [Definition](#definition-2)
-  - [Syntax](#syntax-1)
-  - [Example Usage](#example-usage-1)
-- [Sources](#sources)
-
----
-
 ## **Pointers to Member Functions**
 
 ### **Definition**
@@ -612,6 +617,8 @@ You chose option 2.
 2. **GeeksforGeeks - C++ Pointers to Member Functions** - [geeksforgeeks.org](https://www.geeksforgeeks.org/)
 3. **cplusplus.com - C++ References** - [cplusplus.com](https://www.cplusplus.com/doc/tutorial/references/)
 4. **C++ Switch Statements** - [cplusplus.com](https://www.cplusplus.com/doc/tutorial/control/)
+5. [Stack vs Heap Memory Allocation](https://www.geeksforgeeks.org/stack-vs-heap-memory-allocation/)
+6. [new and delete Operators in C++ For Dynamic Memory](https://www.geeksforgeeks.org/new-and-delete-operators-in-cpp-for-dynamic-memory/)
 
 ---
 ### **📌 Notes:**
@@ -627,6 +634,8 @@ You chose option 2.
 | 2️⃣  | Pointers to Member Functions|[Pointers to Member Function](https://www.geeksforgeeks.org/) |
 | 3️⃣  | C++ References           | [Refernces](https://www.cplusplus.com/doc/tutorial/references/) |
 | 4️⃣  | C++ Switch Statements | [Switch Statement](https://www.cplusplus.com/doc/tutorial/control/) |
+| 5️⃣  | Stack vs Heap Memory Allocation | [Stack vs Heap Memory Allocation](https://www.geeksforgeeks.org/stack-vs-heap-memory-allocation/)|
+| 6️⃣  | Dynamic Memory - Heap |  [new and delete Operators in C++ For Dynamic Memory](https://www.geeksforgeeks.org/new-and-delete-operators-in-cpp-for-dynamic-memory/)|
 
 
 </details>
